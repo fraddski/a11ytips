@@ -1,0 +1,253 @@
+
+body {
+  counter-reset: tip-error-counter tip-warning-counter;
+}
+
+
+/**********
+  WARNINGS
+ **********/
+
+/*** Element ***/
+
+img[alt=""],
+svg:not([role]),
+*[role="application"],
+button[role],
+h1[role], h2[role], h3[role], h4[role], h5[role], h6[role],
+a[role="button"] {
+  outline: dashed 3px rgb(255, 193, 7) !important;
+  counter-increment: tip-warning-counter;
+}
+
+/*** Message box ***/
+
+img[alt=""] + ::before,
+svg:not([role]) + ::before,
+*[role="application"]::after,
+button[role]::after,
+h1[role]::after, h2[role]::after, h3[role]::after,
+h4[role]::after, h5[role]::after, h6[role]::after,
+a[role="button"]::after {
+  z-index: 10000 !important;
+  display: block !important;
+  position: fixed !important;
+  bottom: 6.5rem !important;
+  left: 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1rem !important;
+  padding: 1rem !important;
+  color: #000 !important;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif !important;
+  font-weight: normal !important;
+  border: solid 2px rgb(255, 193, 7) !important;
+  background-color: rgb(255, 249, 230) !important;
+  opacity: 0 !important;
+  transition: opacity 200ms ease !important;
+}
+
+
+/********
+  ERRORS
+ ********/
+
+/*** Element ***/
+
+img:not([alt]),
+svg[role="img"]:not([aria-label]):not([aria-labelledby]),
+svg[role="presentation"][aria-label],
+svg[role="presentation"][aria-labelledby],
+button:empty:not([aria-label]):not([aria-labelledby]),
+input[type="button"]:empty:not([aria-label]):not([aria-labelledby]),
+a:empty:not([aria-label]):not([aria-labelledby]),
+*[tabindex]:not([tabindex="-1"]):not([tabindex="0"]),
+*[aria-pressed]:not(button),
+*[role="checkbox"]:not([aria-checked]),
+*[role="radio"]:not([aria-checked]),
+*:not(a)[role="button"],
+button[aria-hidden="true"]:not([tabindex="-1"]),
+input[type="button"][aria-hidden="true"]:not([tabindex="-1"]),
+a[href][aria-hidden="true"]:not([tabindex="-1"]) {
+  outline: dashed 3px rgb(244, 67, 54) !important;
+  counter-increment: tip-error-counter;
+}
+
+
+/*** Message box ***/
+
+img:not([alt]) + ::before,
+svg[role="img"]:not([aria-label]):not([aria-labelledby]) + ::before,
+svg[role="presentation"][aria-label] + ::before,
+svg[role="presentation"][aria-labelledby] + ::before,
+button:empty:not([aria-label]):not([aria-labelledby])::after,
+input[type="button"]:empty:not([aria-label]):not([aria-labelledby])::after,
+a:empty:not([aria-label]):not([aria-labelledby])::after,
+*[tabindex]:not([tabindex="-1"]):not([tabindex="0"])::after,
+*[aria-pressed]:not(button)::after,
+*[role="checkbox"]:not([aria-checked])::after,
+*[role="radio"]:not([aria-checked])::after,
+*:not(a)[role="button"]::after,
+button[aria-hidden="true"]:not([tabindex="-1"])::after,
+input[type="button"][aria-hidden="true"]:not([tabindex="-1"])::after,
+a[href][aria-hidden="true"]:not([tabindex="-1"])::after {
+  z-index: 10000 !important;
+  display: block !important;
+  position: fixed !important;
+  bottom: 6.5rem !important;
+  left: 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1rem !important;
+  padding: 1rem !important;
+  color: #000 !important;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif !important;
+  font-weight: normal !important;
+  border: solid 2px rgb(244, 67, 54) !important;
+  background-color: rgb(255, 250, 249) !important;
+  opacity: 0 !important;
+  transition: opacity 200ms ease !important;
+}
+
+
+/*****
+  ALL
+ *****/
+
+/*** Show message box ***/
+
+img:not([alt]):hover + ::before,
+img[alt=""]:hover + ::before,
+svg[role="img"]:not([aria-label]):not([aria-labelledby]):hover + ::before,
+svg[role="presentation"][aria-label]:hover + ::before,
+svg[role="presentation"][aria-labelledby]:hover + ::before,
+svg:not([role]):hover + ::before,
+*[role="application"]:hover::after,
+button:empty:not([aria-label]):not([aria-labelledby]):hover::after,
+input[type="button"]:empty:not([aria-label]):not([aria-labelledby]):hover::after,
+a:empty:not([aria-label]):not([aria-labelledby]):hover::after,
+*[tabindex]:not([tabindex="-1"]):not([tabindex="0"]):hover::after,
+*[aria-pressed]:not(button):hover::after,
+*[role="checkbox"]:not([aria-checked]):hover::after,
+*[role="radio"]:not([aria-checked]):hover::after,
+button[role]:hover::after,
+h1[role]:hover::after, h2[role]:hover::after, h3[role]:hover::after,
+h4[role]:hover::after, h5[role]:hover::after, h6[role]:hover::after,
+*[role="button"]:hover::after,
+button[aria-hidden="true"]:not([tabindex="-1"]):hover::after,
+input[type="button"][aria-hidden="true"]:not([tabindex="-1"]):hover::after,
+a[href][aria-hidden="true"]:not([tabindex="-1"]):hover::after {
+  opacity: 1 !important;
+}
+
+
+/**********
+  MESSAGES
+ **********/
+
+/* Alt text can be empty for decorative images only - warning */
+img[alt=""] + ::before {
+ content: 'Image alt text is empty' !important;
+}
+
+/* Svg does not indicate a role - valid, but likely an oversight */
+svg:not([role]) + ::before {
+  content: 'SVG does not have an aria role' !important;
+}
+
+/* Using a role of application is very dangerous */
+*[role="application"]::after {
+  content: 'Role of application - use with caution!' !important;
+}
+
+/* Roles should not be used on elements that already have semantic behaviour */
+button[role]::after,
+h1[role]::after, h2[role]::after, h3[role]::after,
+h4[role]::after, h5[role]::after, h6[role]::after {
+  content: 'Role will override native semantics' !important;
+}
+
+/* If it's a button, use a button */
+*[role="button"]::after {
+  content: 'Use <button> element instead of role' !important;
+}
+
+/* Image elements must have alt text */
+img:not([alt]) + ::before {
+  content: 'Image is missing alt text' !important;
+}
+
+/* Svg as image must have aria label or aria labelled by */
+svg[role="img"]:not([aria-label]):not([aria-labelledby]) + ::before {
+  content: 'SVG has role of img and no aria label' !important;
+}
+
+/* Svg can be decorative or informative, not both */
+svg[role="presentation"][aria-label] + ::before,
+svg[role="presentation"][aria-labelledby] + ::before {
+  content: 'SVG has role of presentation and aria label' !important;
+}
+
+/* Empty button with no accessible label */
+button:empty:not([aria-label]):not([aria-labelledby])::after,
+input[type="button"]:empty:not([aria-label]):not([aria-labelledby])::after {
+  content: 'Button has no text or aria label' !important;
+}
+
+/* Empty link with no accessible label */
+a:empty:not([aria-label]):not([aria-labelledby])::after {
+  content: 'Link has no text or aria label' !important;
+}
+
+/* Tab index should not disrupt the natural tab order */
+*[tabindex]:not([tabindex="-1"]):not([tabindex="0"])::after {
+  content: 'Tab index greater than zero' !important;
+}
+
+/* aria-pressed should only be used with toggle buttons */
+*[aria-pressed]:not(button):not([role="button"])::after {
+  content: 'aria-pressed on non-button element' !important;
+}
+
+/* aria-checked is a required attribute on checkboxes */
+/* (even better, use native elements) */
+*[role="checkbox"]:not([aria-checked])::after {
+  content: 'aria-checked is required for checkboxes' !important;
+}
+
+/* aria-checked is a required attribute on radio buttons */
+/* (even better, use native elements) */
+*[role="radio"]:not([aria-checked])::after {
+  content: 'aria-checked is required for radio buttons' !important;
+}
+
+/* Using aria-hidden on an element which can still receive keyboard focus
+   will cause the user to focus on "nothing" */
+button[aria-hidden="true"]:not([tabindex="-1"])::after,
+input[type="button"][aria-hidden="true"]:not([tabindex="-1"])::after,
+a[href][aria-hidden="true"]:not([tabindex="-1"])::after {
+  content: 'aria-hidden used on a focusable element' !important;
+}
+
+
+/*********
+  SUMMARY
+ *********/
+
+/*** Message box ***/
+
+body::after {
+  z-index: 10000 !important;
+  display: block !important;
+  position: fixed !important;
+  bottom: 1rem !important;
+  left: 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+  padding: 1rem !important;
+  color: #000 !important;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif !important;
+  font-weight: normal !important;
+  background-color: rgb(240, 240, 240) !important;
+  border: solid 2px rgb(150, 150, 150) !important;
+  white-space: pre !important;
+  content: 'Issues: ' counter(tip-error-counter) '\AWarnings: ' counter(tip-warning-counter) !important;
+}
